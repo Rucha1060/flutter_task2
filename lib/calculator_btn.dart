@@ -13,7 +13,7 @@ class CalcButton extends StatelessWidget {
           width: 70,
           height: 70,
           // ignore: deprecated_member_use
-          child: FlatButton(
+          child: RaisedButton(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               onPressed: () {
                 callback(no);
