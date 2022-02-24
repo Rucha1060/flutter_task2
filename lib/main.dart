@@ -16,6 +16,55 @@ class CalculateApp extends StatefulWidget {
 }
 
 class _CalculateAppState extends State<CalculateApp> {
+  late int no1;
+  late int no2;
+  late String history = '';
+  late String display = '';
+  late String res;
+  late String operation;
+
+  void btnOnClick(String val) {
+    print(val);
+    if (val == 'C') {
+      display = '';
+      no1 = 0;
+      no2 = 0;
+      res = '';
+    } else if (val == 'AC') {
+      display = '';
+      no1 = 0;
+      no2 = 0;
+      res = '';
+      history = '';
+    } else if (val == '<-') {
+      res = display.substring(0, display.length - 1);
+    } else if (val == '+' || val == '-' || val == 'x' || val == '/') {
+      no1 = int.parse(display);
+      res = '';
+      operation = val;
+    } else if (val == '=') {
+      no2 = int.parse(display);
+      if (operation == '+') {
+        res = (no1 + no2).toString();
+        history = no1.toString() + operation.toString() + no2.toString();
+      }
+      if (operation == '-') {
+        res = (no1 - no2).toString();
+        history = no1.toString() + operation.toString() + no2.toString();
+      }
+      if (operation == 'x') {
+        res = (no1 * no2).toString();
+        history = no1.toString() + operation.toString() + no2.toString();
+      }
+      if (operation == '/') {
+        res = (no1 / no2).toString();
+        history = no1.toString() + operation.toString() + no2.toString();
+      }
+    } else {
+      res = int.parse(display + val).toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,7 +82,7 @@ class _CalculateAppState extends State<CalculateApp> {
                   padding: EdgeInsets.only(right: 15),
                   child: Text(
                     history,
-                    style: TextStyle(color: Colors.black, fontSize: 40),
+                    style: TextStyle(color: Colors.grey, fontSize: 40),
                   ),
                 ),
                 alignment: Alignment(1.0, 1.0),
