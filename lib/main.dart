@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mathexps/mathexps.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 import 'calculator_btn.dart';
 
