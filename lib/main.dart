@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mathexps/mathexps.dart';
 
 import 'calculator_btn.dart';
 
@@ -16,53 +17,35 @@ class CalculateApp extends StatefulWidget {
 }
 
 class _CalculateAppState extends State<CalculateApp> {
-  late int no1;
-  late int no2;
-  late String history = '';
-  late String display = '';
-  late String res;
-  late String operation;
+  String history = '';
+  String exp = '';
 
-  void btnOnClick(String val) {
-    print(val);
-    if (val == 'C') {
-      display = '';
-      no1 = 0;
-      no2 = 0;
-      res = '';
-    } else if (val == 'AC') {
-      display = '';
-      no1 = 0;
-      no2 = 0;
-      res = '';
+  void numClick(String text) {
+    setState(() => exp += text);
+  }
+
+  void allClear(String text) {
+    setState(() {
       history = '';
-    } else if (val == '<-') {
-      res = display.substring(0, display.length - 1);
-    } else if (val == '+' || val == '-' || val == 'x' || val == '/') {
-      no1 = int.parse(display);
-      res = '';
-      operation = val;
-    } else if (val == '=') {
-      no2 = int.parse(display);
-      if (operation == '+') {
-        res = (no1 + no2).toString();
-        history = no1.toString() + operation.toString() + no2.toString();
-      }
-      if (operation == '-') {
-        res = (no1 - no2).toString();
-        history = no1.toString() + operation.toString() + no2.toString();
-      }
-      if (operation == 'x') {
-        res = (no1 * no2).toString();
-        history = no1.toString() + operation.toString() + no2.toString();
-      }
-      if (operation == '/') {
-        res = (no1 / no2).toString();
-        history = no1.toString() + operation.toString() + no2.toString();
-      }
-    } else {
-      res = int.parse(display + val).toString();
-    }
+      exp = '';
+    });
+  }
+
+  void clear(String text) {
+    setState(() {
+      exp = '';
+    });
+  }
+
+  void evaluate(String text) {
+    Parser p = Parser();
+    Expression exp = p.parse(exp);
+    ContextModel cm = ContextModel();
+
+    setState(() {
+      history = exp;
+      exp = exp.evaluate(EvaluationType.REAL, cm).toString();
+    });
   }
 
   @override
@@ -91,7 +74,7 @@ class _CalculateAppState extends State<CalculateApp> {
                 child: Padding(
                   padding: EdgeInsets.all(15),
                   child: Text(
-                    display,
+                    exp,
                     style: TextStyle(color: Colors.black, fontSize: 50),
                   ),
                 ),
@@ -100,10 +83,10 @@ class _CalculateAppState extends State<CalculateApp> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  CalcButton(no: 'AC', fillColor: 0xFF880E4F, callback: btnOnClick),
-                  CalcButton(no: 'C', fillColor: 0xFF880E4F, callback: btnOnClick),
-                  CalcButton(no: '<-', fillColor: 0xFF880E4F, callback: btnOnClick),
-                  CalcButton(no: '/', fillColor: 0xFF880E4F, callback: btnOnClick),
+                  CalcButton(no: 'AC', fillColor: 0xFF880E4F, callback: allClear),
+                  CalcButton(no: 'C', fillColor: 0xFF880E4F, callback: clear),
+                  CalcButton(no: '<-', fillColor: 0xFF880E4F, callback: numClick),
+                  CalcButton(no: '/', fillColor: 0xFF880E4F, callback: numClick),
                 ],
               ),
               Row(
@@ -112,38 +95,38 @@ class _CalculateAppState extends State<CalculateApp> {
                   CalcButton(
                     no: '7',
                     fillColor: 0xFF0097A7,
-                    callback: btnOnClick,
+                    callback: numClick,
                   ),
-                  CalcButton(no: '8', fillColor: 0xFF0097A7, callback: btnOnClick),
-                  CalcButton(no: '9', fillColor: 0xFF0097A7, callback: btnOnClick),
-                  CalcButton(no: 'x', fillColor: 0xFF880E4F, callback: btnOnClick),
+                  CalcButton(no: '8', fillColor: 0xFF0097A7, callback: numClick),
+                  CalcButton(no: '9', fillColor: 0xFF0097A7, callback: numClick),
+                  CalcButton(no: 'x', fillColor: 0xFF880E4F, callback: numClick),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  CalcButton(no: '4', fillColor: 0xFF0097A7, callback: btnOnClick),
-                  CalcButton(no: '5', fillColor: 0xFF0097A7, callback: btnOnClick),
-                  CalcButton(no: '6', fillColor: 0xFF0097A7, callback: btnOnClick),
-                  CalcButton(no: '-', fillColor: 0xFF880E4F, callback: btnOnClick),
+                  CalcButton(no: '4', fillColor: 0xFF0097A7, callback: numClick),
+                  CalcButton(no: '5', fillColor: 0xFF0097A7, callback: numClick),
+                  CalcButton(no: '6', fillColor: 0xFF0097A7, callback: numClick),
+                  CalcButton(no: '-', fillColor: 0xFF880E4F, callback: numClick),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  CalcButton(no: '1', fillColor: 0xFF0097A7, callback: btnOnClick),
-                  CalcButton(no: '2', fillColor: 0xFF0097A7, callback: btnOnClick),
-                  CalcButton(no: '3', fillColor: 0xFF0097A7, callback: btnOnClick),
-                  CalcButton(no: '+', fillColor: 0xFF880E4F, callback: btnOnClick),
+                  CalcButton(no: '1', fillColor: 0xFF0097A7, callback: numClick),
+                  CalcButton(no: '2', fillColor: 0xFF0097A7, callback: numClick),
+                  CalcButton(no: '3', fillColor: 0xFF0097A7, callback: numClick),
+                  CalcButton(no: '+', fillColor: 0xFF880E4F, callback: numClick),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  CalcButton(no: '0', fillColor: 0xFF0097A7, callback: btnOnClick),
-                  CalcButton(no: '00', fillColor: 0xFF0097A7, callback: btnOnClick),
-                  CalcButton(no: '000', fillColor: 0xFF0097A7, callback: btnOnClick),
-                  CalcButton(no: '=', fillColor: 0xFF880E4F, callback: btnOnClick),
+                  CalcButton(no: '0', fillColor: 0xFF0097A7, callback: numClick),
+                  CalcButton(no: '00', fillColor: 0xFF0097A7, callback: numClick),
+                  CalcButton(no: '000', fillColor: 0xFF0097A7, callback: numClick),
+                  CalcButton(no: '=', fillColor: 0xFF880E4F, callback: evaluate),
                 ],
               ),
             ]))));
