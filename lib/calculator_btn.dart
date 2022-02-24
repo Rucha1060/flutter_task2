@@ -23,7 +23,7 @@ class CalcButton extends StatelessWidget {
                 style: TextStyle(fontSize: 25),
               ),
               color: Color(fillColor),
-              textColor: Colors.white)),
+              textColor: Colors.black)),
     );
   }
 }
