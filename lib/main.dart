@@ -203,5 +203,6 @@ class _CalculateAppState extends State<CalculateApp> {
   Widget build(BuildContext context) {
     // TODO: implement build
     throw UnimplementedError();
+    throw UnimplementedError();
   }
 }
