@@ -82,7 +82,7 @@ class _CalculateAppState extends State<CalculateApp> {
                   padding: EdgeInsets.only(right: 15),
                   child: Text(
                     history,
-                    style: TextStyle(color: Colors.grey, fontSize: 40),
+                    style: TextStyle(color: Colors.black, fontSize: 40),
                   ),
                 ),
                 alignment: Alignment(1.0, 1.0),
