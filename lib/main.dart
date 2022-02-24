@@ -16,122 +16,143 @@ class CalculateApp extends StatefulWidget {
 }
 
 class _CalculateAppState extends State<CalculateApp> {
+  late int no1;
+  late int no2;
+  late String history = '';
+  late String display = '';
+  late String res;
+  late String operation;
+
+  btnOnClick(String val) {
+    print(val);
+    if (val == 'C') {
+      display = '';
+      no1 = 0;
+      no2 = 0;
+      res = '';
+    } else if (val == 'AC') {
+      display = '';
+      no1 = 0;
+      no2 = 0;
+      res = '';
+      history = '';
+    } else if (val == '<-') {
+      res = display.substring(0, display.length - 1);
+    } else if (val == '+' || val == '-' || val == 'x' || val == '/') {
+      no1 = int.parse(display);
+      res = '';
+      operation = val;
+    } else if (val == '=') {
+      no2 = int.parse(display);
+      if (operation == '+') {
+        res = (no1 + no2).toString();
+        history = no1.toString() + operation.toString() + no2.toString();
+      }
+      if (operation == '-') {
+        res = (no1 - no2).toString();
+        history = no1.toString() + operation.toString() + no2.toString();
+      }
+      if (operation == 'x') {
+        res = (no1 * no2).toString();
+        history = no1.toString() + operation.toString() + no2.toString();
+      }
+      if (operation == '/') {
+        res = (no1 / no2).toString();
+        history = no1.toString() + operation.toString() + no2.toString();
+      }
+    } else {
+      res = int.parse(display + val).toString();
+    }
+    setState(() {
+      display = res;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    int firstnum;
-    int secondnum;
-    String texttodisplay = "0";
-    String res;
-    String operatortoperform;
-
-    void btnclicked(String btnval) {
-      if (btnval == "C") {
-        texttodisplay = "";
-        firstnum = 0;
-        secondnum = 0;
-        res = "0";
-        operatortoperform = "";
-      } else if (btnval == "+" || btnval == "-" || btnval == "x" || btnval == "/") {
-        firstnum = int.parse(texttodisplay);
-        res = "";
-        operatortoperform = btnval;
-      } else if (btnval == "=") {
-        secondnum = int.parse(texttodisplay);
-        if (operatortoperform == "+") {
-          res = (firstnum + secondnum).toString();
-        }
-        if (operatortoperform == "-") {
-          res = (firstnum - secondnum).toString();
-        }
-        if (operatortoperform == "x") {
-          res = (firstnum * secondnum).toString();
-        }
-        if (operatortoperform == "/") {
-          res = (firstnum ~/ secondnum).toString();
-        }
-      } else {
-        res = int.parse(texttodisplay + btnval).toString();
-      }
-      setState(() {
-        texttodisplay = res;
-      });
-    }
-
-    Widget custombutton(String btnval) {
-      return Expanded(
-        child: OutlineButton(
-          padding: EdgeInsets.all(25.0),
-          onPressed: () => btnclicked(btnval),
-          child: Text(
-            "$btnval",
-            style: TextStyle(fontSize: 25.0),
-          ),
-        ),
-      );
-    }
-
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Calculator'),
-        ),
-        body: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(10.0),
-                  alignment: Alignment.bottomRight,
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Calculator',
+        home: Scaffold(
+            appBar: AppBar(
+              title: Text("Calculator"),
+              backgroundColor: Colors.black,
+            ),
+            body: Container(
+                child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 15),
                   child: Text(
-                    "$texttodisplay",
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    history,
+                    style: TextStyle(color: Colors.black, fontSize: 40),
                   ),
                 ),
+                alignment: Alignment(1.0, 1.0),
+              ),
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Text(
+                    display,
+                    style: TextStyle(color: Colors.black, fontSize: 50),
+                  ),
+                ),
+                alignment: Alignment(1.0, 1.0),
               ),
               Row(
-                children: <Widget>[
-                  custombutton("9"),
-                  custombutton("8"),
-                  custombutton("7"),
-                  custombutton("+"),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CalcButton(
+                    no: 'AC',
+                    fillColor: 0xFF880E4F,
+                    callback: btnOnClick,
+                  ),
+                  CalcButton(no: 'C', fillColor: 0xFF880E4F, callback: btnOnClick),
+                  CalcButton(no: '<-', fillColor: 0xFF880E4F, callback: btnOnClick),
+                  CalcButton(no: '/', fillColor: 0xFF880E4F, callback: btnOnClick),
                 ],
               ),
               Row(
-                children: <Widget>[
-                  custombutton("6"),
-                  custombutton("5"),
-                  custombutton("4"),
-                  custombutton("-"),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CalcButton(
+                    no: '7',
+                    fillColor: 0xFF0097A7,
+                    callback: btnOnClick,
+                  ),
+                  CalcButton(no: '8', fillColor: 0xFF0097A7, callback: btnOnClick),
+                  CalcButton(no: '9', fillColor: 0xFF0097A7, callback: btnOnClick),
+                  CalcButton(no: 'x', fillColor: 0xFF880E4F, callback: btnOnClick),
                 ],
               ),
               Row(
-                children: <Widget>[
-                  custombutton("3"),
-                  custombutton("2"),
-                  custombutton("1"),
-                  custombutton("x"),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CalcButton(no: '4', fillColor: 0xFF0097A7, callback: btnOnClick),
+                  CalcButton(no: '5', fillColor: 0xFF0097A7, callback: btnOnClick),
+                  CalcButton(no: '6', fillColor: 0xFF0097A7, callback: btnOnClick),
+                  CalcButton(no: '-', fillColor: 0xFF880E4F, callback: btnOnClick),
                 ],
               ),
               Row(
-                children: <Widget>[
-                  custombutton("C"),
-                  custombutton("0"),
-                  custombutton("="),
-                  custombutton("/"),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CalcButton(no: '1', fillColor: 0xFF0097A7, callback: btnOnClick),
+                  CalcButton(no: '2', fillColor: 0xFF0097A7, callback: btnOnClick),
+                  CalcButton(no: '3', fillColor: 0xFF0097A7, callback: btnOnClick),
+                  CalcButton(no: '+', fillColor: 0xFF880E4F, callback: btnOnClick),
                 ],
               ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    throw UnimplementedError();
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CalcButton(no: '0', fillColor: 0xFF0097A7, callback: btnOnClick),
+                  CalcButton(no: '00', fillColor: 0xFF0097A7, callback: btnOnClick),
+                  CalcButton(no: '000', fillColor: 0xFF0097A7, callback: btnOnClick),
+                  CalcButton(no: '=', fillColor: 0xFF880E4F, callback: btnOnClick),
+                ],
+              ),
+            ]))));
   }
 }
