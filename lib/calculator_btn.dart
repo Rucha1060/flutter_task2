@@ -8,34 +8,22 @@ class CalcButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(5),
-        child: SizedBox(
+      margin: EdgeInsets.all(5),
+      child: SizedBox(
           width: 70,
           height: 70,
           // ignore: deprecated_member_use
           child: RaisedButton(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            onPressed: () {
-              callback(no);
-            },
-            child: Ink(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF0097A7),
-                    Color(0xFF880E4F)
-                  ],
-                ),
-              ),
-
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+              onPressed: () {
+                callback(no);
+              },
               child: Text(
                 no,
                 style: TextStyle(fontSize: 25),
               ),
               color: Color(fillColor),
-              // textColor: Colors.black)),
-            ),
-          ),
-        ));
+              textColor: Colors.black)),
+    );
   }
 }
