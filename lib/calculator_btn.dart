@@ -9,15 +9,6 @@ class CalcButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.blue.withOpacity(0.1),
-            blurRadius: 1,
-            offset: Offset(10, 10),
-          ),
-        ],
-      ),
       child: SizedBox(
           width: 70,
           height: 70,
