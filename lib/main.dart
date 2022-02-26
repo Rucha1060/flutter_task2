@@ -11,7 +11,6 @@ class CalculateApp extends StatefulWidget {
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _CalculateAppState();
-    throw UnimplementedError();
   }
 }
 
